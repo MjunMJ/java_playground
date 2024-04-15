@@ -1,0 +1,31 @@
+package com.palindromemeijun;
+
+import java.util.Scanner;
+
+/*A palindrome is a text that spells the same from left to right and vice versa.
+This file aims to illustrate different methods of checking if a user input is a palindrome.*/
+
+public class palindrome {
+    public static boolean isPalin(String input){
+        int len = input.length();
+        boolean checking = false; //initialise a default answer
+        for (int i=0; i<len/2; i++){
+            char leftTerm;
+            leftTerm= input.charAt(i);
+            char rightTerm;
+            rightTerm = input.charAt(len-1-i);
+            checking = leftTerm==rightTerm;
+        }
+        return checking;
+    }
+    public static void main(String[] args) {
+        Scanner sc;
+        sc = new Scanner(System.in);
+        System.out.println("Type in one word or number:");
+        String input = sc.nextLine();
+        System.out.println("You typed in "+input);
+        String inputLower = input.toLowerCase();
+        boolean ans = isPalin(inputLower);
+        System.out.println(ans);
+    }
+}
