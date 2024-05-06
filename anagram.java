@@ -28,6 +28,6 @@ public class Main {
                 sortWordPair.get(key).add(l);
             }
         }
-        System.out.println(sortWordPair);
+        System.out.println(sortWordPair).values();
     }//end main
 }
