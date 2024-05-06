@@ -1,3 +1,5 @@
+//Solution for question 4 of https://www.codecademy.com/resources/blog/java-code-challenges-for-beginners/
+
 import java.lang.reflect.Array;
 import java.util.*;
 
