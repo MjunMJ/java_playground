@@ -1,8 +1,5 @@
-//need to change way to calculate win. using numbers leads to wrong checks like when there are 4 numbers
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class ticTacToe {
@@ -30,8 +27,7 @@ public class ticTacToe {
 
         do {
             //Play X turn
-            ArrayList<Integer> playerInputsX = playerPrompts("X");
-            inputValues(gameBoard, playerInputsX.get(0), playerInputsX.get(1), "X");
+            playerPrompts("X", gameBoard);
             print(gameBoard);
             winnerFound = checkAnswers(gameBoard, "X");
             if (winnerFound) {
@@ -41,8 +37,7 @@ public class ticTacToe {
             }
 
             //Play Y turn
-            ArrayList<Integer> playerInputsY = playerPrompts("Y");
-            inputValues(gameBoard, playerInputsY.get(0), playerInputsY.get(1), "Y");
+            playerPrompts("Y", gameBoard);
             print(gameBoard);
             winnerFound = checkAnswers(gameBoard, "Y");
             if (winnerFound) {
@@ -57,36 +52,52 @@ public class ticTacToe {
     }//end main
 
     public static void print(String[][] gameBoard){
-        String divider = "\s".repeat(5)+"|";
-        for (String[] row:gameBoard){
-            for (String square:row){
-                System.out.print(square);
-                System.out.print(divider);
-            }
-            System.out.println(" ");
-            System.out.println("-".repeat(18));
+        String divider = "\s".repeat(4)+"|";
+        for (int j=0; j<gameBoard.length;j++){
+            if (j<2) {
+                for (int i = 0; i < gameBoard[j].length; i++) {
+                    if (i < 2) {
+                        System.out.print(gameBoard[j][i]);
+                        System.out.print(divider);
+                    } else {
+                        System.out.println(gameBoard[j][i]);
+                    }
+                }
+                System.out.println("-".repeat(18));
+            }//end of row 1 and 2
+            else {
+                for (int i = 0; i < gameBoard[j].length; i++) {
+                    if (i < 2) {
+                        System.out.print(gameBoard[j][i]);
+                        System.out.print(divider);
+                    } else {
+                        System.out.println(gameBoard[j][i]);
+                    }
+                }
+            } //end of rwo 3 with no bottom border
         }
-        System.out.println();//add line spacing
+        System.out.println();
     }//end print
 
-    public static ArrayList<Integer> playerPrompts(String playerName){
-        ArrayList<Integer> playerInputs = new ArrayList<>(Collections.nCopies(2,0));
+    public static String[][] playerPrompts(String playerName, String[][] gameBoard){
         Scanner keyboard = new Scanner(System.in);
-        System.out.print("Player "+playerName+ "row: ");
-        int xPosition = keyboard.nextInt();
-        playerInputs.set(0, xPosition);
-        System.out.print("Player "+playerName+ "col: ");
-        int yPosition = keyboard.nextInt();
-        playerInputs.set(1,yPosition);
+        int cellFull = 0;
+        do {
+            System.out.print("Player " + playerName + "row: ");
+            int xPosition = keyboard.nextInt();
+            System.out.print("Player " + playerName + "col: ");
+            int yPosition = keyboard.nextInt();
 
-        return playerInputs;
-    }//end player prompts
-
-    public static String[][] inputValues(String[][] gameBoard, int xPosition, int yPostition, String userInput){
-        gameBoard[yPostition-1][xPosition-1]=userInput;
+            if (gameBoard[yPosition - 1][xPosition - 1].isBlank()) {
+                gameBoard[yPosition - 1][xPosition - 1] = playerName;
+                cellFull=1;
+            } else {
+                System.out.println("cell already occupied");
+            }
+        }while (cellFull==0);
 
         return gameBoard;
-    }//end input Values
+    }//end player prompts
 
     public static boolean checkAnswers(String[][] gameBoard, String player){
         boolean winnerFound = false;
